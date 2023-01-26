@@ -1,0 +1,57 @@
+.top-container {
+  margin: 2.5vh 2.5vw;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: 2.5vh 2.5vw; */
+}
+.left-space {
+   margin-left: -20px;
+}
+hr {
+   border: none;
+   border-bottom: 1px solid rgb(202, 200, 200); margin-bottom: 10px;
+}
+.datagrid-align {
+   margin: 0px 0px;
+}
+.btn-style {
+   margin: 10px 10px 0px 0px;
+   padding-left: 16px;
+   padding-right: 16px;
+}
+.top-space {
+   margin-top: 20px;
+}
+.bottom-container {
+  background-color: #fff;
+  padding: 2.5vh 2.5vw;
+}
+.hover-check:hover {
+   /* background-color: red; */
+   cursor: not-allowed;
+}
+.top-marg {
+   margin-top: 10px;
+   padding-top: 10px;
+
+}
+.gridBorder {
+   border: 1px solid rgb(228, 222, 222);
+   max-height: 500px;
+   min-height: 250px;
+}
+.details-container {
+  /* margin-top: 30px; */
+  border-bottom: 1px solid #e4e3e3;
+}
+.title-margin {
+   margin-left: 10px;
+}
+.dropdown-container {
+  display: grid;
+  gap: 1vw;
+}
+
+.table-container {
+  padding-top: 3vh;
+}

@@ -1,0 +1,32 @@
+{
+   "projectName": "Amalgam_Wild_Catch_V2",
+   "proxy": {
+      "/m3api-rest": {
+         "target": "https://mingle-cqa-ionapi.cqa.inforcloudsuite.com/M3CEDEVAPPFAB_TST",
+         "secure": false,
+         "changeOrigin": true,
+         "logLevel": "debug"
+      },
+      "/mne": {
+         "target": "https://m3cedevapp.m3.dev.inforcloudsuite.com",
+         "secure": false,
+         "changeOrigin": true,
+         "logLevel": "debug"
+      },
+      "/ca": {
+         "target": "https://m3cedevapp.m3.dev.inforcloudsuite.com",
+         "secure": false,
+         "changeOrigin": true,
+         "logLevel": "debug"
+      },
+      "/ODIN_DEV_TENANT": {
+         "target": "https://mingle-cqa-ionapi.cqa.inforcloudsuite.com/M3CEDEVAPPFAB_TST",
+         "secure": false,
+         "changeOrigin": true,
+         "pathRewrite": {
+            "^/ODIN_DEV_TENANT": ""
+         },
+         "logLevel": "debug"
+      }
+   }
+}

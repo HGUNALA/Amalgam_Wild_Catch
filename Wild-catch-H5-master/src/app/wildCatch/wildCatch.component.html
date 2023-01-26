@@ -1,0 +1,242 @@
+<soho-icons></soho-icons>
+<soho-icons-ext></soho-icons-ext>
+<soho-icons-empty></soho-icons-empty>
+<div class="page-container" #panelPlaceholder>
+   <soho-header>
+      <soho-toolbar-flex>
+         <soho-toolbar-flex-section [isTitle]="true">
+            <h2>
+               <span soho-toolbar-flex-page-title>Amalgam Wild Catch</span>
+            </h2>
+         </soho-toolbar-flex-section>
+      </soho-toolbar-flex>
+   </soho-header>
+   <div class="twelve columns top-marg" soho-busyindicator [activated]="isLoading" [text]="isLoadingText"
+      [blockUI]="true" [displayDelay]="0">
+      <div class="row twelve columns left-space">
+         <div class="two columns">
+            <div class="field">
+               <label for="custom-dropdown-id-IL-house" class="label">Warehouse</label>
+               <input soho-lookup [columns]="whsColumns" [dataset]="whsFinal" [(ngModel)]="selWh"
+                  (change)="onWarehouse($event)" [disabled]="isWhDisable" [options]="{
+                     paging: true,
+                     filterWhenTyping:true,
+                     pagesize: 15,
+                     pagesizes: [15,25,35,50,75]
+                   }" [toolbar]="{
+                     results: true,
+                     title: 'Warehouse List',
+                     keywordFilter: true,
+                     actions: true,
+                     rowHeight: true,
+                     collapsibleFilter: false,
+                     fullWidth: true
+                   }" />
+               <h5>{{warehouseMessage}}</h5>
+            </div>
+         </div>
+         <div class="three columns">
+            <div class="field">
+               <label for="supplier">Supplier</label>
+               <input soho-lookup [columns]="supColumns" [dataset]="supFinal" [(ngModel)]="selSup" [options]="{
+                  paging: true,
+                  filterWhenTyping:true,
+                  pagesize: 15,
+                  pagesizes: [15,25,35,50,75]
+                }" [toolbar]="{
+                  results: true,
+                  title: 'Supplier List',
+                  keywordFilter: true,
+                  actions: true,
+                  rowHeight: true,
+                  collapsibleFilter: false,
+                  fullWidth: true
+                }" (change)="onSupplier($event)" [disabled]="isSupDisable" />
+               <h5>{{supplierMessage}}</h5>
+            </div>
+         </div>
+         <div class="three columns">
+            <div class="field">
+               <label for="data-tabbable">Item Number</label>
+               <input data-tabbable="false" soho-lookup [columns]="itmColumns" [dataset]="itmFinal" [icon]=""
+                  [(ngModel)]="selItem" (change)="onItem($event)" [options]="{
+                     paging: true,
+                     filterWhenTyping:true,
+                     pagesize: 15,
+                     pagesizes: [15,25,35,50,75]
+                   }" [toolbar]="{
+                     results: true,
+                     title: 'Item List',
+                     keywordFilter: true,
+                     actions: true,
+                     rowHeight: true,
+                     collapsibleFilter: false,
+                     fullWidth: true
+                   }" [disabled]="isProcessOn" />
+               <h5>{{itemMessage}}</h5>
+            </div>
+         </div>
+         <div class="two columns">
+            <div class="field">
+               <label for="quantity">Quantity</label>
+               <input type="text" id="first-name" data-automation-id="input-first-name" class="input-mm" soho-mask
+                  data-tabbable="true" soho-input [clearable]="true" [process]="'number'" [allowDecimal]="true"
+                  [integerLimit]="50" [decimalLimit]="6" soho-data-clearable="true" name="first-name"
+                  [(ngModel)]="quantity" [allowThousandsSeparator]="false" inputmode="numeric" [disabled]="isProcessOn"
+                  (keydown.enter)="onQuantity()" />
+               <h5>{{validationMessage4}}</h5>
+            </div>
+         </div>
+         <div class="two columns">
+            <label for="line-number">Line Number</label>
+            <div class="row">
+               <span>{{lineNumber}}</span>
+            </div>
+         </div>
+      </div>
+      <div class="row twelve columns">
+         <div class="two columns left-space">
+            <div class="field">
+               <label for="source">Source</label>
+               <select soho-dropdown name="states-readonly1" [(ngModel)]="selSrc" Search class="input-mm"
+                  (change)="onSource()" [disabled]="isProcessOn">
+                  <option *ngFor="let src of srcList" [value]="src">{{src}}</option>
+               </select>
+               <h5>{{validationMessage5}}</h5>
+            </div>
+         </div>
+         <div class="two columns">
+            <div class="field">
+               <label for="lot">Lot Number</label>
+               <input type="text" id="lot-number" data-automation-id="input-first-name" name="lot-number" soho-input
+                  [clearable]="true" [(ngModel)]="lotNumber" class="input-mm" (keydown.enter)="onLotNo()"
+                  [disabled]="isProcessOn" />
+               <h5>{{validationMessage6}}</h5>
+            </div>
+         </div>
+         <div class="eight columns top-space">
+            <div class="three columns">
+               <label for="line-number">Cumulative Quantity</label>
+               <div class="row">
+                  <span>{{cumulativeQuantity}}</span>
+               </div>
+            </div>
+            <div class="three columns">
+               <label for="line-number">Cumulative Amount</label>
+               <div class="row">
+                  <span>{{cumulativeAmount}}</span>
+               </div>
+            </div>
+            <button class="btn-primary btn-style" (click)=" onAddlines()" [disabled]="isProcessOn">Add
+               Lines</button>
+            <button (click)="onProcess()" class="btn-primary btn-style" [disabled]="isProcessDisable">Process</button>
+            <button (click)="onReceive()" [disabled]="isReceiveDisable" class="btn-primary btn-style">Receive</button>
+         </div>
+      </div>
+      <div class="twelve columns datagrid-align" id="datagrid">
+         <hr />
+         <div class="toolbar" role="toolbar">
+            <div class="title">
+               Items
+               <span class="datagrid-result-count">(N Results)</span>
+            </div>
+            <div class="buttonset">
+               <label class="label" for="common-toolbar-searchfield">Search</label>
+               <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield"
+                  placeholder="Search" />
+               <soho-toolbar-button-set>
+                  <button soho-button="btn" icon="refresh" data-action="{'button':'refresh'}" soho-context-menu
+                     menu="action-popupmenu-refresh" (click)="onRefresh()" [disabled]="isRefreshDisable">
+                     <span>Refresh</span>
+                  </button>
+               </soho-toolbar-button-set>
+               <soho-toolbar-button-set>
+                  <button soho-button="btn" icon="delete" data-action="{'button':'delete'}" soho-context-menu
+                     menu="action-popupmenu-delete" (click)="onDelete()" [disabled]="isDeleteDisable">
+                     <span>Delete</span>
+                  </button>
+               </soho-toolbar-button-set>
+               <soho-toolbar-button-set>
+                  <button soho-button="btn" icon="export" data-action="{'button':'export'}" soho-context-menu
+                     menu="action-popupmenu-export" (click)="exportToExcel()">
+                     <span>ExportToExcel</span>
+                  </button>
+               </soho-toolbar-button-set>J
+               <soho-toolbar-button-set>
+                  <button soho-button="btn" icon="reset" data-action="{'button':'reset'}" soho-context-menu
+                     menu="action-popupmenu-reset" (click)="onReset()">
+                     <span>Reset</span>
+                  </button>
+               </soho-toolbar-button-set>
+            </div>
+         </div>
+         <div soho-datagrid [gridOptions]="datagridOptions" class="gridBorder" (selected)="onSelected($event)"
+            filterable="true" columnReorder="true" [selectable]="isSelectable"></div>
+      </div>
+   </div>
+   <!-- <div>
+   <soho-header>
+
+      <soho-toolbar-flex>
+         <button soho-toolbar-flex-nav-button>Show Navigation</button>
+         <soho-toolbar-flex-section [isTitle]="true">
+            <h2>
+               <span soho-toolbar-flex-page-title>The Official IDS Enterprise Angular Controls</span>
+               <span soho-toolbar-flex-section-title>Demo</span>
+            </h2>
+         </soho-toolbar-flex-section>
+
+         <soho-toolbar-flex-section [isButtonSet]="true">
+            <input id="header-more" class="searchfield" name="header-searchfield" />
+            <button soho-button="icon" icon="more" title="more"></button>
+         </soho-toolbar-flex-section>
+
+         <soho-toolbar-flex-more-button [isPageChanger]="true">
+         </soho-toolbar-flex-more-button>
+
+      </soho-toolbar-flex>
+
+   </soho-header>
+</div> -->
+
+   <!-- <soho-header>
+   <soho-toolbar-flex>
+      <soho-toolbar-flex-section [isTitle]="true">
+         <h2>
+            <span soho-toolbar-flex-page-title>Item Overview</span>
+         </h2>
+      </soho-toolbar-flex-section>
+      <soho-toolbar-flex-section [isSearch]="true" class="flex-grow-2">
+         <input soho-toolbar-flex-searchfield class="context" />
+      </soho-toolbar-flex-section>
+      <soho-toolbar-flex-section [isButtonSet]="true" class="flex-grow-1 flex-end">
+         <button soho-button="icon" icon="settings">
+            <span>Settings</span>
+         </button>
+         <button soho-button="icon" icon="delete">
+            <span>Delete</span>
+         </button>
+         <button soho-button="icon" icon="more">
+            <span>More</span>
+         </button>
+      </soho-toolbar-flex-section>
+   </soho-toolbar-flex>
+</soho-header> -->
+
+   <!-- <soho-header>
+   <soho-toolbar-flex>
+      <soho-toolbar-flex-section [isTitle]="true">
+         <h2>
+            <span soho-toolbar-flex-page-title>Test Toolbar Searchfield</span>
+         </h2>
+      </soho-toolbar-flex-section>
+      <soho-toolbar-flex-section [isSearch]="true">
+         <input soho-toolbar-flex-searchfield placeholder="Search..." [clearable]="true" [collapsible]="true" />
+      </soho-toolbar-flex-section>
+      <soho-toolbar-flex-section [isTitleFavor]="true">
+         <button soho-button="icon" icon="more">
+            <span>more</span>
+         </button>
+      </soho-toolbar-flex-section>
+   </soho-toolbar-flex>
+</soho-header> -->
